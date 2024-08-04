@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+    jenkins:
+        image: jenkins/jenkins:lts-jdk21
+        privileged: true
+        user: root
+        restart: always
+        networks:
+            - dev-net
+        ports:
+            - 8081:8080
+        container_name: jenkins
+        volumes:
+            - ./jenkins-root-ssh:/root/.ssh
+            - dev_jenkins:/var/jenkins_home
+            - /var/run/docker.sock:/var/run/docker.sock
+            - ./jenkins-tools/apache-maven-3.9.8:/opt/maven
+            - ./jenkins-tools/docker/docker:/usr/local/bin/docker
+            - ./jenkins-tools/jdk-17.0.12/:/opt/jdk-17.0.12/
+            - ./jenkins-tools/jdk-21.0.4/:/opt/jdk-21.0.4/
+networks:
+    dev-net:
+        external: true
+
+volumes:
+    dev_jenkins:

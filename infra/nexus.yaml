@@ -1,0 +1,18 @@
+version: "3"
+services:
+    nexus_oss:
+        image: sonatype/nexus3:3.70.1
+        container_name: nexus3
+        ports:
+            - 8084:8081
+        networks:
+            - dev-net
+        restart: always
+        volumes:
+            - nexus_data:/nexus-data
+volumes:
+    nexus_data:
+
+networks:
+    dev-net:
+        external: true
